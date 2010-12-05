@@ -14,6 +14,10 @@ function resultCallBack(result)
 	window.globalVariable.results = result.results;
 	window.globalVariable.resultNum = result.resultCount;
 	
+	// Google Analytics Event Tracking
+	window._gaq = window._gaq || [];
+	window._gaq.push(['_trackEvent', 'Search', 'Search Num', '', result.results.length]);
+	
 	// 画面に表示
 	showItem();
 }

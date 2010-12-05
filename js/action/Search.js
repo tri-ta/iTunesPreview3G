@@ -27,6 +27,10 @@ function search()
 	script.setAttribute('type', 'text/javascript');
 	script.setAttribute('src', url);
 	document.getElementsByTagName('body').item(0).appendChild(script);
+
+	// Google Analytics Event Tracking
+	window._gaq = window._gaq || [];
+	window._gaq.push(['_trackEvent', 'Search', 'From Main', keyword]);
 	
 	return false; // formのsubmitを中止
 }

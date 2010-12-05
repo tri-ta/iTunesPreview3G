@@ -127,6 +127,12 @@ function showItem()
 			$(resultTable).append(tr);
 		}
 	}
+
+	// Google Analytics Event Tracking
+	if (delta > 0) {
+		window._gaq = window._gaq || [];
+		window._gaq.push(['_trackEvent', 'Search', 'Load More Page', '', (delta / window.globalVariable.itemsPerPage) + 1]);
+	}
 }
 
 /**
@@ -134,21 +140,26 @@ function showItem()
  */
 function audioPlay(e)
 {
-	var myAudio = document.getElementById('au' + this.id.substr(2)); // 自分のaudio要素を取得
-	var myTr = document.getElementById('tr' + this.id.substr(2)); // 自分のtr要素を取得
+	var mediaId = this.id.substr(2);
+	var myAudio = document.getElementById('au' + mediaId); // 自分のaudio要素を取得
+	var myTr    = document.getElementById('tr' + mediaId); // 自分のtr要素を取得
 	if (!$(myTr).hasClass('playing'))
 	{ // タップされた曲が再生中ではなかった
 		// 他に再生中の曲があれば、止める
 		$('tr.playing').each(function()
 		{ // tr要素のスコープで実行される
-			audioPause(this.id.substr(2)); // 曲を停止
+			audioPause(mediaId); // 曲を停止
 		});
 		myAudio.play(); // 曲を再生
 		$(myTr).attr('class', 'playing');
+
+		// Google Analytics Event Tracking
+		window._gaq = window._gaq || [];
+		window._gaq.push(['_trackEvent', 'Play', 'From Main', mediaId]);
 	}
 	else { // タップされた曲が再生中だった
 		// 曲を停止
-		audioPause(this.id.substr(2));
+		audioPause(mediaId);
 	}
 	
 	// バブリングストップ
