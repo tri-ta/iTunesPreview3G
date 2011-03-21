@@ -23,6 +23,11 @@
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
+		<script type="text/javascript">
+			window.onload = function() {
+				setTimeout(function() { scrollTo(0,1); scrollTo(0,0); }, 100);
+			};
+		</script>
 	</head>
 	<body>
 		<form id="searchForm" action="#">
