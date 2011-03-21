@@ -31,6 +31,8 @@ function search()
 	// Google Analytics Event Tracking
 	window._gaq = window._gaq || [];
 	window._gaq.push(['_trackEvent', 'Search', 'From Main', keyword]);
+
+	$('#searchBtn').focus();
 	
 	return false; // formのsubmitを中止
 }
