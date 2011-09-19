@@ -26,7 +26,7 @@ function jump2Album(albumId) {
 	window._gaq.push(['_trackEvent', 'Jump', 'Album', albumId]);
 
 	$.mobile.changePage({  
-		url: 'album.html', 
+		url: 'album.php', 
 		type: 'get',
 		data: 'cId=' + albumId
 	}, 'slide', false, true, false);  
@@ -56,7 +56,7 @@ function jump2Bookmarks() {
 	window._gaq.push(['_trackEvent', 'Jump', 'Bookmarks', '']);
 
 	$.mobile.changePage({
-		url: 'bookmark.html', 
+		url: 'bookmark.php', 
 		type: 'get',
 		data: ''
 	}, false, false, true, false);
