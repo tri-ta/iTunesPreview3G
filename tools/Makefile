@@ -2,7 +2,7 @@ TMP_DIR=tmp
 
 JS_DIR=../javascripts
 JS_OUT_DIR=$(JS_DIR)/min
-JS_FILES=jquery.min.js jquery.mobile-1.0b2.min.js const.js global.js callback.js bookmark.js itunes_search.js global_mediator.js search_mediator.js bookmark_mediator.js album_mediator.js list_mediator.js
+JS_FILES=jquery-1.6.4.js jquery.mobile-1.0b2.js const.js global.js callback.js bookmark.js itunes_search.js global_mediator.js search_mediator.js bookmark_mediator.js album_mediator.js list_mediator.js
 JS_PATH=$(addprefix $(JS_DIR)/,$(JS_FILES))
 JS_TMP_PATH=$(addprefix $(TMP_DIR)/,$(JS_FILES))
 
