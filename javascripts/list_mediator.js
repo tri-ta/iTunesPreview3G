@@ -157,25 +157,21 @@ function showItem(results, resultElem, mode) {
  * show more
  */
 function showMore() {
-	var delta = window.gVar.curItemNum; // この関数の前回の実行時点で読み込んだアイテム数
-	var length = delta + window.gVar.itemsPerPage;
-	var items = $('.result_list:visible').children('.ui-li-has-thumb');
-
-	for(var i = delta; i < length && i < window.gVar.resultNum; i++) {
+	var items = $('.result_list:visible .hidden');
+	for(var i = 0; i < window.gVar.itemsPerPage; i++) {
 		$(items[i]).removeClass('hidden');
 	}
-	window.gVar.curItemNum = length;
+	window.gVar.curItemNum = window.gVar.curItemNum + window.gVar.itemsPerPage;
 
-	if(window.gVar.curItemNum + 1 > window.gVar.resultNum) {
+	if($('.result_list:visible .hidden').length == 0) {
 		// ヒットした曲を全て表示し終わっていたら消す
 		$('.more:visible').remove();
 	}
 	
 	// Google Analytics Event Tracking
-	if (delta > 0) {
-		window._gaq = window._gaq || [];
-		window._gaq.push(['_trackEvent', 'List', 'LoadMore', '', (delta / window.gVar.itemsPerPage) + 1]);
-	}
+	window._gaq = window._gaq || [];
+	window._gaq.push(['_trackEvent', 'List', 'LoadMore', '', 
+		($('.result_list:visible li.ui-li-has-thumb:visible').length / window.gVar.itemsPerPage) + 1]);
 }
 
 /**
