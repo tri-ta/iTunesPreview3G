@@ -1,7 +1,7 @@
 <audio id="preview"></audio> 
 <div id="search_script" class="search_script"></div>
 
-<?php if ($_SERVER['IS_30SEC_FM_PRODUCTION']) : ?>
+<?php if ($_SERVER['HTTP_HOST'] == '30sec.fm'/*$_SERVER['IS_30SEC_FM_PRODUCTION']*/) : ?>
 	<script src="/javascripts/min/minify.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var _gaq = _gaq || [];

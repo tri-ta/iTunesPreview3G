@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>iPhoneで音楽試聴 - 30sec.fm</title>
-<?php if ($_SERVER['IS_30SEC_FM_PRODUCTION']) : ?>
+<?php if ($_SERVER['HTTP_HOST'] == '30sec.fm'/* $_SERVER['IS_30SEC_FM_PRODUCTION'] */) : ?>
   <link href="/stylesheets/min/minify.css" media="screen" rel="stylesheet" type="text/css" />
 <?php else: ?>
   <link href="/stylesheets/jquery.mobile-1.0b2.css" media="screen" rel="stylesheet" type="text/css" />
