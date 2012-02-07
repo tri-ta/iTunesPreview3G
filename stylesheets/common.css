@@ -17,7 +17,7 @@
   text-align: center;
 }
 .ui-header .ui-title {
-  margin: 15px auto 0 auto;
+  margin: 0 auto;
 }
 .ui-bar-a p {
   font-weight: normal;
@@ -106,6 +106,22 @@
   font-size: 14px;
 }
 
+.ui-content {
+  padding: 0 10px;
+}
+
+.ui-content .ui-listview {
+  margin: 0 -10px;
+}
+
+.ui-input-search {
+  min-width: 240px;
+  width: auto;
+}
+
+.search_form .ui-btn-icon-notext .ui-btn-inner {
+  padding: 3px 1px 2px 3px;
+}
 
 /* === default === */
 body {
@@ -131,6 +147,22 @@ h2, h3, h4 {
   overflow: hidden;
 }
 
+h2.title {
+  clear: left;
+  margin: 5px 0 10px 0;
+  padding: 0;
+  width: auto;
+  font-weight: normal;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 18px;
+  line-height: 1.2em;
+  overflow: hidden;
+}
+
+input {
+  width: 100%;
+}
+
 /* === class === */
 .ui-header .ui-btn-right,
 .ui-header .ui-btn-left {
@@ -138,14 +170,21 @@ h2, h3, h4 {
 }
 
 .ui-header h1 {
-  width : 94px;
-  height: 18px;
+  width: 100%;
+  text-align: center;
+}
+
+.ui-header h1 a {
+  margin: 0 auto;
+  display: block;
+  width : 113px;
+  height: 40px;
   text-indent: -9999px;
   background: url("/images/css_sprite.png") no-repeat;
-  -webkit-background-size: 204px 196px;
-  -moz-background-size: 204px 196px;
-  -o-background-size: 204px 196px;
-  background-size: 204px 196px;
+  -webkit-background-size: 250px 500px;
+  -moz-background-size: 250px 500px;
+  -o-background-size: 250px 500px;
+  background-size: 250px 500px;
 }
 
 .ui-content {
@@ -183,6 +222,10 @@ h2, h3, h4 {
   text-align: center;
 }
 
+.search_form {
+  margin: 10px 0 0 0;
+}
+
 .artwork {
   width: 60px;
   height: 60px;
@@ -198,15 +241,58 @@ h2, h3, h4 {
   border-top: none; /* 表示崩れ対策 */
 }
 
-.intro {
+.info,
+.caution {
+  display: block;
   width: auto;
-  height: 204px;
-  padding: 0 0 0 103px;
-  background: url("/images/css_sprite.png") 0px -18px no-repeat;
-  -webkit-background-size: 204px 196px;
-  -moz-background-size: 204px 196px;
-  -o-background-size: 204px 196px;
-  background-size: 204px 196px;
+  min-height: 41px;
+  padding: 5px 0;
+}
+.info p,
+.caution p {
+  display: block;
+  min-height: 41px;
+  max-height: 141px;
+  line-height: 19px;
+  margin: 0;
+  padding: 0 10px 0 60px;
+  font-size: 14px;
+  color: #eee;
+  -webkit-background-size: 250px 500px;
+  -moz-background-size: 250px 500px;
+  -o-background-size: 250px 500px;
+  background-size: 250px 500px;
+}
+
+.info {
+  margin: 0 0 10px 0;
+  border: 1px solid #666;
+  border-radius: 10px;
+}
+.info p {
+  padding: 0 10px 0 60px;
+  background: url("/images/css_sprite.png") 10px -100px no-repeat;
+}
+.caution {
+  margin: 2px -10px;
+  background: #a50306; /* Old browsers */
+  background: -moz-linear-gradient(top,  #a50306 0%, #470000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a50306), color-stop(100%,#470000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #a50306 0%,#470000 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #a50306 0%,#470000 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #a50306 0%,#470000 100%); /* IE10+ */
+  background: linear-gradient(top,  #a50306 0%,#470000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a50306', endColorstr='#470000',GradientType=0 ); /* IE6-9 */
+  border-top: 1px solid #750306;
+  border-bottom: 1px solid #370000;
+}
+.caution p {
+  background: url("/images/css_sprite.png") 10px -200px no-repeat;
+}
+
+.dailychart {
+  width: auto;
+  min-height: 200px;
 }
 
 /* === id === */
@@ -250,8 +336,8 @@ h2, h3, h4 {
 
 #search_result_container,
 #album_result_container,
-#bookmarks_result_container{
-  margin: 5px 0 0 0;
+#bookmarks_result_container {
+  margin: 10px 0 0 0;
 }
 
 #more a{
@@ -260,6 +346,7 @@ h2, h3, h4 {
 }
 
 #footer {
+  clear: left;
   width: 100%;
   border-top: 1px #1a1a1a solid;
 }
@@ -280,7 +367,7 @@ h2, h3, h4 {
 
 /* === id === */
 #album {
-  margin: 0 -15px 20px -15px;
+  margin: 0 -10px -11px -10px;
   height: 100px;
   border-top: 1px solid #161616;
   border-bottom: 1px solid #333;

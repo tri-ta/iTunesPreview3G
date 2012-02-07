@@ -1,5 +1,7 @@
 /**
  * 画面上に曲情報を出力
+ * @param results 検索結果の配列
+ * @param resultElem 検索結果を表示する対象のHTML要素
  * @param mode 検索モードかアルバム情報モードかを選択
  */
 function showItem(results, resultElem, mode) {
@@ -9,7 +11,11 @@ function showItem(results, resultElem, mode) {
 	{
 		// Not found画面を生成する
 		// メッセージ
-		resultElem.append(document.createTextNode(getMessages().noItemFound));
+		var p_notFound = $('<p />');
+		p_notFound.append(document.createTextNode(getMessages().noItemFound));
+		var div_notFound = $('<div class="info" />');
+		div_notFound.append(p_notFound);
+		resultElem.append(div_notFound);
 		return;
 	}
 	
@@ -37,7 +43,7 @@ function showItem(results, resultElem, mode) {
 	{
 		li = $('<li data-theme="a" />');
 		li.attr('id', 'tr' + results[i].trackId);
-		if(mode == MODE_SEARCH && i >= window.gVar.itemsPerPage) {
+		if(mode != MODE_ALBUM&& i >= window.gVar.itemsPerPage) {
 			li.addClass('hidden');
 		}
 
@@ -110,7 +116,7 @@ function showItem(results, resultElem, mode) {
 		span_btns = $(document.createElement('span'));
 		span_btns.addClass('btn_list');
 		span_btns.append(a_bookmark);
-		if(mode == MODE_SEARCH) {
+		if(mode != MODE_ALBUM) {
 			// "View Albumリンクもボタンペインに配置する
 			a_viewAlbum = $(document.createElement('a'));
 			a_viewAlbum.append(document.createTextNode(getLabels().viewAlbum));
@@ -135,7 +141,7 @@ function showItem(results, resultElem, mode) {
 	
 	window.gVar.curItemNum = window.gVar.itemsPerPage; // ロード済みアイテムの数を記憶
 
-	if(mode == MODE_SEARCH && window.gVar.curItemNum < window.gVar.resultNum) { // まだ未ロードの曲が存在する
+	if(mode != MODE_ALBUM && window.gVar.curItemNum < window.gVar.resultNum) { // まだ未ロードの曲が存在する
 		// 追加で読み込むためのリンク作成
 		var a_more = $(document.createElement('a'));
 		a_more.click(showMore);
@@ -257,4 +263,169 @@ function showButtons(e) {
 
 	// 再描画
 	btnPane.parent().listview();
+}
+
+/**
+ * 画面上に曲情報を出力（RSS版）
+ * @param results 検索結果の配列
+ * @param resultElem 検索結果を表示する対象のHTML要素
+ * @param mode モードを選択（今のところCHARTモードのみ）
+ */
+function showItemRss(results, resultElem, mode) {
+	resultElem.html('');
+
+	if (results.length == 0)
+	{
+		// エラーメッセージ
+		var p_notFound = $('<p />');
+		p_notFound.append(document.createTextNode(chartReadError));
+		var div_notFound = $('<div class="caution" />');
+		div_notFound.append(p_notFound);
+		resultElem.append(div_notFound);
+		return;
+	}
+	
+	// 検索結果を結果テーブルに設定
+	var ul, li;
+	var img_artwork; // ジャケット写真
+	var a_audioInfo; // 試聴用audio要素
+	var a_preview; // 試聴リンク
+	var h2_track; // 曲名
+	var h3_artist; // アーティスト名
+	var h4_album; // アルバム名
+	var a_info; // 詳細リンク
+	var li_btns; // ボタンペイン
+	var span_btns; // ボタンペインの一部
+	var a_bookmark; // ブックマークリンク
+	var a_viewAlbum; // アルバム参照リンク
+
+	// 全体をまとめるul要素作成
+	ul = $('<ul id="result_list" class="result_list" data-role="listview" data-theme="a" data-icon="arrow-r" data-split-icon="info" />');
+	resultElem.append(ul);
+
+	// li要素作成
+	var length = results.length;
+	for(var i = 0; i < length; i++) // mode:検索なら0, アルバムなら1が設定されている。アルバムの0番目の要素はアルバム情報なのでスキップしたい。
+	{
+		li = $('<li data-theme="a" />');
+		li.attr('id', 'tr' + results[i]['id']['attributes']['im:id']);
+		if(mode == MODE_CHART&& i >= window.gVar.itemsPerPage) {
+			li.addClass('hidden');
+		}
+
+		// 試聴用audio要素の情報を保存するa要素作成
+		a_audioInfo = $(document.createElement('info'));
+		a_audioInfo.attr('id', 'au' + results[i]['id']['attributes']['im:id']);
+		a_audioInfo.attr('href', results[i]['link']['1']['attributes']['href']);
+		a_audioInfo.hide();
+		
+		// ジャケット写真作成
+		img_artwork = $(document.createElement('img'));
+		img_artwork.attr('id', 'aw' + results[i]['id']['attributes']['im:id']);
+		img_artwork.attr('src', window.gVar.pathIconPlay);
+		img_artwork.css({
+			'background': 'url(' + results[i]['im:image']['1']['label'] + ') no-repeat',
+			'width': '60px',
+			'float': 'left'
+		});
+		
+		// 曲情報作成
+		h2_track = $(document.createElement('h2'));
+		h2_track.append(document.createTextNode(i+1 + '.' + results[i]['im:name']['label']));
+		h3_artist = $(document.createElement('h3'));
+		h3_artist.append(document.createTextNode(results[i]['im:artist']['label']));
+		h4_album = $(document.createElement('h4'));
+		$(h4_album).append(document.createTextNode(results[i]['im:collection']['im:name']['label']));
+
+                // 各情報に試聴リンクを設定
+		a_preview = $(document.createElement('a'));
+		a_preview.attr('id', 'nm' + results[i]['id']['attributes']['im:id']);
+		a_preview.click(audioPlay);
+		a_preview.attr('href', 'javascript:$(this).click()');
+		a_preview.append(img_artwork);
+		a_preview.append(h2_track);
+		a_preview.append(h3_artist);
+		a_preview.append(h4_album);
+		
+		// ボタンペインへのリンクを設定
+		a_info = $(document.createElement('a'));
+		a_info.click(showButtons);
+		a_info.attr('href', 'javascript:$(this).click()');
+		a_info.attr('id', 'if' + results[i]['id']['attributes']['im:id']);
+		a_info.attr('data-theme', 'a');
+		a_info.append('Option');
+
+		// ボタンペインに載せるボタン作成(ただし一部はボタンペイン作成時に作成）
+		a_bookmark = $(document.createElement('a'));
+		if(gVar.bookmarks.indexOf(',' + results[i]['id']['attributes']['im:id'] + ',') == -1) {
+			a_bookmark.addClass('not_bookmarked');
+			a_bookmark.append(document.createTextNode(getLabels().bookmark));
+		} else {
+			a_bookmark.addClass('bookmarked');
+			a_bookmark.append(document.createTextNode(getLabels().unbookmark));
+		}
+		a_bookmark.click(function() {
+			toggleBookmark(this, $(this).attr('title'));
+		});
+		a_bookmark.attr('href', 'javascript:$(this).click()');
+		a_bookmark.attr('title', results[i]['id']['attributes']['im:id']);
+		a_bookmark.attr('data-role', 'button');
+		a_bookmark.attr('data-inline', 'true');
+		a_bookmark.attr('data-theme', 'a');
+		a_bookmark.attr('data-icon', 'star');
+
+		// ボタンペイン作成
+		li_btns = $(document.createElement('li'));
+		li_btns.addClass('btn_pane');
+		li_btns.addClass('bp' + results[i]['id']['attributes']['im:id']);
+		li_btns.attr('id', 'bp' + results[i]['id']['attributes']['im:id']);
+		span_btns = $(document.createElement('span'));
+		span_btns.addClass('btn_list');
+		span_btns.append(a_bookmark);
+		if(mode != MODE_ALBUM) {
+			// "View Albumリンクもボタンペインに配置する
+			a_viewAlbum = $(document.createElement('a'));
+			a_viewAlbum.append(document.createTextNode(getLabels().viewAlbum));
+			a_viewAlbum.attr('href', '/album?cId=' +
+				results[i]['im:collection']['link']['attributes']['href'].substring(
+					results[i]['im:collection']['link']['attributes']['href'].lastIndexOf('/id') + 3,
+					results[i]['im:collection']['link']['attributes']['href'].lastIndexOf('?')
+				)
+			);
+			a_viewAlbum.attr('data-role', 'button');
+			a_viewAlbum.attr('data-inline', 'true');
+			a_viewAlbum.attr('data-theme', 'a');
+			a_viewAlbum.attr('data-icon', 'info');
+			span_btns.append(a_viewAlbum);
+		}
+		span_btns.children().buttonMarkup();
+		li_btns.append(span_btns);
+		li_btns.css('display', 'none');
+
+		// 行に情報を追加
+		li.append(a_preview);
+		li.append(a_info);
+		li.append(a_audioInfo);
+		ul.append(li); // 結果テーブルに行を追加
+		ul.append(li_btns); // 結果テーブルに行を追加（こっちはボタンペイン）
+	}
+	
+	window.gVar.curItemNum = window.gVar.itemsPerPage; // ロード済みアイテムの数を記憶
+
+	if(mode == MODE_CHART && window.gVar.curItemNum < window.gVar.resultNum) { // まだ未ロードの曲が存在する
+		// 追加で読み込むためのリンク作成
+		var a_more = $(document.createElement('a'));
+		a_more.click(showMore);
+		a_more.append(document.createTextNode(getLabels().loadMore));
+		a_more.attr('name', 'more');
+		a_more.attr('href', 'javascript:$(this).click()');
+		li = $(document.createElement('li'));
+		li.addClass('more');
+		li.attr('id', 'more');
+		li.attr('data-icon', 'arrow-d');
+		li.append(a_more);
+		ul.append(li);
+	}
+
+	ul.listview();
 }

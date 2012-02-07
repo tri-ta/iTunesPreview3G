@@ -15,8 +15,8 @@
 		})();
 	</script>
 <?php else: ?>
-	<script src="/javascripts/jquery-1.6.4.js" type="text/javascript"></script>
-	<script src="/javascripts/jquery.mobile-1.0b2.js" type="text/javascript"></script>
+	<script src="/javascripts/jquery-1.7.1.js" type="text/javascript"></script>
+	<script src="/javascripts/jquery.mobile-1.0.1.js" type="text/javascript"></script>
 	<script src="/javascripts/const.js" type="text/javascript"></script>
 	<script src="/javascripts/global.js" type="text/javascript"></script>
 	<script src="/javascripts/callback.js" type="text/javascript"></script>

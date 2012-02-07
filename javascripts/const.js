@@ -1,2 +1,3 @@
 var MODE_SEARCH = 0;
 var MODE_ALBUM = 1;
+var MODE_CHART = 2;

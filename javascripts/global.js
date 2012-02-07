@@ -56,6 +56,7 @@ var gMessages = {
 		searchIntro: '検索結果の楽曲を試聴できます。<br />※音量にご注意ください。',
 		bookmarkIntro: 'お気に入りに登録された楽曲がまだありません。',
 		searchHelpText: '歌手, 曲, アルバム名で検索...',
-		noItemFound: 'キーワードに該当する検索結果がありません。'
+		noItemFound: 'キーワードにヒットする楽曲が見つかりません。',
+		chartReadError: 'チャートの読み込みに失敗しました。'
 	}
 }

@@ -18,7 +18,7 @@ function itunesSearch() {
 	keyword = encodeURI(keyword);
 	
 	// 検索実行
-	var url = 'http://itunes.apple.com/search?term=' + keyword + '&country=jp&lang=ja_jp&entity=song&callback=resultCallBack&limit=30';
+	var url = 'http://itunes.apple.com/search?term=' + keyword + '&country=jp&lang=ja_jp&entity=song&callback=resultCallBack&limit=50';
 	var script = document.createElement('script');
 	script.setAttribute('type', 'application/javascript');
 	script.setAttribute('src', url);
@@ -40,7 +40,7 @@ function itunesSearchAlbum(albumId) {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'application/javascript');
 	script.setAttribute('src', url);
-	//$('#search_script').children().remove();
+	//$('.search_script:visible').children().remove();
 	$('.search_script:visible').append(script);
 }
 
@@ -52,7 +52,18 @@ function itunesSearchIds(idsStr) {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'application/javascript');
 	script.setAttribute('src', url);
-	//$('#search_script').children().remove();
+	//$('.search_script:visible').children().remove();
 	$('.search_script:visible').append(script);
 }
 
+/**
+ * ランキングの検索実行
+ */
+function itunesSearchChart(genre) {
+	var url = 'http://itunes.apple.com/jp/rss/' + genre + '/limit=50/callback=resultCallBackChart/json';
+	var script = document.createElement('script');
+	script.setAttribute('type', 'application/javascript');
+	script.setAttribute('src', url);
+	//$('.search_script:visible').children().remove();
+	$('.search_script:visible').append(script);
+}

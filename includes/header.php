@@ -6,7 +6,7 @@
 <?php if ($_SERVER['HTTP_HOST'] == '30sec.fm'/* $_SERVER['IS_30SEC_FM_PRODUCTION'] */) : ?>
   <link href="/stylesheets/min/minify.css" media="screen" rel="stylesheet" type="text/css" />
 <?php else: ?>
-  <link href="/stylesheets/jquery.mobile-1.0b2.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/jquery.mobile-1.0.1.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/common.css" media="screen" rel="stylesheet" type="text/css" />
 <?php endif; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -15,5 +15,5 @@
 <body>
 <div data-role="page" data-theme="a" id="container" class="container">
   <div data-role="header" data-backbtn="false" id="header">
-    <h1>30sec.fm</h1>
+    <h1><a href="/">30sec.fm</a></h1>
   </div><!-- #header -->
