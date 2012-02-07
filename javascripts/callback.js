@@ -81,7 +81,7 @@ function resultCallBackChart(result) {
 	// 検索結果表示を初期化
 	//var resultElem = $('.search_result_container:visible');
 	//resultElem.children().remove();
-	//$.mobile.hidePageLoadingMsg();
+	$.mobile.hidePageLoadingMsg();
 
 	// グローバル変数を初期化
 	window.gVar.curItemNum = 0;

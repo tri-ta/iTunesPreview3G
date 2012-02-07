@@ -1,7 +1,7 @@
 /**
  * init
  */
-$(document).bind('pagecreate', function(){  
+$(document).bind('pageinit', function(){  
 	// basic setup
 	$.mobile.ajaxEnabled = true;
 	$.mobile.page.prototype.options.addBackBtn = true;
@@ -14,5 +14,4 @@ $(document).bind('pagecreate', function(){
 	//$('.menu_bookmark:last').html(getLabels().menuBookmark);
 
 	$('#preview').bind('ended', audioStop);
-
 });

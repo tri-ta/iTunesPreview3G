@@ -197,10 +197,6 @@ input {
   margin-left: 70px;
 }
 
-.not_focused {
-  color: #666;
-}
-
 .btn_pane {
   display: block;
   border-top: #000;

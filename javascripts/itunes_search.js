@@ -13,6 +13,13 @@ function itunesSearch() {
 	
 	// 読み込み中メッセージ表示
 	$.mobile.showPageLoadingMsg();
+	
+	if(keyword == '') {
+		$('.keyword:visible').addClass('not_focused');
+		$('.keyword:visible').attr('placeholder', getMessages().searchHelpText);
+		showChart(); // iTunesチャートを表示
+		return;
+	}
 
 	// 検索ワードエスケープ処理
 	keyword = encodeURI(keyword);

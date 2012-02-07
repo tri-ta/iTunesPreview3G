@@ -12,38 +12,41 @@ $(document).bind('pageshow', function(){
 	var isNotSearched = $('.search_result_container .info').is(':visible');;
 	if(isNotSearched){
 		//resultContainer.html(getMessages().searchIntro);
-		$('.keyword:visible').attr('value', getMessages().searchHelpText);
+		$('.keyword:visible').attr('placeholder', getMessages().searchHelpText);
+		// チャート表示
+		itunesSearchChart('topsongs'); // get collection information from iTunes Store API
 	}
 
 	// search setup
 	$('.search_form:visible').submit(function() { $('.selected:visible').get(0).focus(); itunesSearch(); return false; }); // submitでフォーカスを外して検索
 	//$('#search_form').blur(itunesSearch); // blurイベントに検索アクションを割り当て…たかったが、なぜか効かないのでHTMLのonblur属性に直に設定した
-	
-	// 以下、チャート表示
-	// 一度実行された後かどうかチェック
-	if($('.chart:visible').html() != '') return;
-
-	// set rank info
-	itunesSearchChart('topsongs'); // get collection information from iTunes Store API
 });
 
 function focusHandler() {
 	var keywordField = $('.keyword:visible');
 	if(keywordField.hasClass('not_focused')) {
 		keywordField.removeClass('not_focused');
-		keywordField.attr('value', '');
 	}
 }
 
 /**
  * show iTunes Chart
  */
-function showChart(results) {
+function showChart() {
 	// get html elements
-	var chartPane = $('.chart:visible');
-
+	var container = $('.search_result_container:visible');
+	
+	// clear container
+	container.html('');
+	
+	// generate html elements
+	var h2_title = $('<h2 class="title">iTunes Chart (Top 50)</h2>');
+	var div_chart = $('<div class="chart"></div>');
+	container.append(h2_title);
+	container.append(div_chart);
+	
 	// set track information
-	showItemRss(results, chartPane, MODE_CHART);
+	itunesSearchChart('topsongs'); // get collection information from iTunes Store API
 }
 
 /**

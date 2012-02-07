@@ -2,7 +2,7 @@
 
   <div id="menu">
     <a href="/" id="menu_search" class="menu_search">曲を検索</a>
-    <a href="/bookmark#" id="menu_bookmark" class="menu_bookmark selected">お気に入り</a>
+    <a href="/bookmark" id="menu_bookmark" class="menu_bookmark selected">お気に入り</a>
   </div>
   <div data-role="content">
     <div id="bookmarks_result_container" class="bookmarks_result_container" data-theme="a"></div>
