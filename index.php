@@ -9,8 +9,8 @@
 			<input type="search" name="keyword" id="keyword" class="keyword not_focused" data-theme="c" value="" onfocus="focusHandler(); itunesSearch()" onblur="itunesSearch()"/>
 		</form>
 		<div id="search_result_container" class="search_result_container" data-theme="a">
-			<h2 class="title">iTunes Chart (Top 50)</h2>
 			<div class="info"><p>曲をタップすると音がでます。ご注意ください。</p></div>
+			<h2 class="title">iTunes Chart (Top 50)</h2>
 			<div class="chart"></div>
 		</div>
 	</div>
